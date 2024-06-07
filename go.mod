@@ -1,4 +1,4 @@
-module app
+module challenge-stresstest
 
 go 1.21.3
 

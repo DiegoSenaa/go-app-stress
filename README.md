@@ -1,10 +1,10 @@
 # Desafio Stress-Test
 
-   * Criei a imagem docker:
+   1. Criei a imagem docker:
    ```bash
-   docker build -t app .
+   docker build -t stress-test .
    ```
-   3. Execute a imagem local:
+   2. Execute a imagem local:
    ```bash
-   docker run app --concurrency=<INT> --requests=<INT> --url=<URL>
+   docker run -rm stress-test --concurrency=10 --requests=100 --url=https://httpstat.us/Random/200,201,500-504
    ```

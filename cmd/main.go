@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
-	"app/internal/httpclient"
-	"app/internal/report"
+	"challenge-stresstest/internal/httpclient"
+	"challenge-stresstest/internal/report"
 
 	"github.com/spf13/cobra"
 )
@@ -32,28 +32,28 @@ func main() {
 		}
 
 		start := time.Now()
-		results := runApp(url, requests, concurrency)
+		results := runTest(url, requests, concurrency)
 		duration := time.Since(start)
 
-		report.Report(results, duration)
+		report.GenerateReport(results, duration)
 	}
 
 	rootCmd.Execute()
 }
 
-func runApp(url string, req int, conc int) report.Results {
-	workers := make(chan struct{}, conc)
+func runTest(url string, requests int, concurrency int) report.Results {
+	workers := make(chan struct{}, concurrency)
 	results := report.Results{
-		TotalRequests:   req,
+		TotalRequests:   requests,
 		SuccessRequests: 0,
 		StatusCodes:     make(map[int]int),
 	}
 
-	for i := 0; i < req; i++ {
+	for i := 0; i < requests; i++ {
 		workers <- struct{}{}
 		go func() {
 			defer func() { <-workers }()
-			code, err := httpclient.Request(url)
+			code, err := httpclient.MakeRequest(url)
 			results.StatusCodes[code]++
 			if err != nil {
 				fmt.Printf("Error making the request: %s\n", err)

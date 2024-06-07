@@ -14,7 +14,7 @@ type Results struct {
 	StatusCodes     map[int]int
 }
 
-func Report(results Results, duration time.Duration) {
+func GenerateReport(results Results, duration time.Duration) {
 	fmt.Println("----------------------------")
 	fmt.Println("------- Test Results -------")
 	fmt.Print("----------------------------")

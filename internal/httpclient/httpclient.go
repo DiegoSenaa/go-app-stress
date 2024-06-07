@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-func Request(url string) (int, error) {
+func MakeRequest(url string) (int, error) {
 	client := http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
